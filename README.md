@@ -126,8 +126,8 @@ e, como extra, subida dos containers com testes de aceitação via curl.
 
 | Integrante | Responsabilidade | Branch |
 |---|---|---|
-| Aluno(a) 1 – DEV 1 | CRUD de Autores: `Autor`, `AutorRepository`, `AutorController`, `AutorControllerTest`, `AutorList.js`, `AutorForm.js` | `feature/autores` |
-| Aluno(a) 2 – DEV 2 | CRUD de Livros: `Livro`, `LivroRepository`, `LivroController`, `LivroControllerTest`, `LivroList.js`, `LivroForm.js` | `feature/livros` |
+| Augusto Stambassi – DEV 1 | CRUD de Autores: `Autor`, `AutorRepository`, `AutorController`, `AutorControllerTest`, `AutorList.js`, `AutorForm.js` | `feature/autores` |
+| Henrique Giberti – DEV 2 | CRUD de Livros: `Livro`, `LivroRepository`, `LivroController`, `LivroControllerTest`, `LivroList.js`, `LivroForm.js` | `feature/livros` |
 
 Arquivos comuns (`api.js`, `App.js`, `docker-compose.yml`, CI, README) foram divididos entre a dupla.
 Cada integrante revisou o Pull Request do outro.
