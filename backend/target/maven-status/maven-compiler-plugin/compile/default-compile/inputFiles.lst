@@ -1,0 +1,7 @@
+/home/stambassi/Documents/Curso/5-Periodo/ES2/biblioteca-web-/backend/src/main/java/com/biblioteca/model/Autor.java
+/home/stambassi/Documents/Curso/5-Periodo/ES2/biblioteca-web-/backend/src/main/java/com/biblioteca/controller/LivroController.java
+/home/stambassi/Documents/Curso/5-Periodo/ES2/biblioteca-web-/backend/src/main/java/com/biblioteca/model/Livro.java
+/home/stambassi/Documents/Curso/5-Periodo/ES2/biblioteca-web-/backend/src/main/java/com/biblioteca/repository/LivroRepository.java
+/home/stambassi/Documents/Curso/5-Periodo/ES2/biblioteca-web-/backend/src/main/java/com/biblioteca/repository/AutorRepository.java
+/home/stambassi/Documents/Curso/5-Periodo/ES2/biblioteca-web-/backend/src/main/java/com/biblioteca/controller/AutorController.java
+/home/stambassi/Documents/Curso/5-Periodo/ES2/biblioteca-web-/backend/src/main/java/com/biblioteca/BibliotecaApplication.java

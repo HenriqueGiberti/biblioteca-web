@@ -1,0 +1,7 @@
+com/biblioteca/model/Livro.class
+com/biblioteca/BibliotecaApplication.class
+com/biblioteca/controller/LivroController.class
+com/biblioteca/controller/AutorController.class
+com/biblioteca/repository/LivroRepository.class
+com/biblioteca/model/Autor.class
+com/biblioteca/repository/AutorRepository.class

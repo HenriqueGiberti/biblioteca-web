@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LivroController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">biblioteca-web</a> &gt; <a href="index.source.html" class="el_package">com.biblioteca.controller</a> &gt; <span class="el_source">LivroController.java</span></div><h1>LivroController.java</h1><pre class="source lang-java linenums">package com.biblioteca.controller;
+
+import com.biblioteca.model.Autor;
+import com.biblioteca.model.Livro;
+import com.biblioteca.repository.AutorRepository;
+import com.biblioteca.repository.LivroRepository;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/api/livros&quot;)
+@CrossOrigin(origins = &quot;*&quot;)
+public class LivroController {
+
+    private final LivroRepository livroRepository;
+    private final AutorRepository autorRepository;
+
+<span class="fc" id="L23">    public LivroController(LivroRepository livroRepository, AutorRepository autorRepository) {</span>
+<span class="fc" id="L24">        this.livroRepository = livroRepository;</span>
+<span class="fc" id="L25">        this.autorRepository = autorRepository;</span>
+<span class="fc" id="L26">    }</span>
+
+    /** O JSON traz so o id do autor: &quot;autor&quot;: {&quot;id&quot;: 1}. Aqui buscamos o autor completo. */
+    private Autor resolverAutor(Autor autorInformado) {
+<span class="pc bpc" id="L30" title="2 of 4 branches missed.">        if (autorInformado == null || autorInformado.getId() == null) {</span>
+<span class="nc" id="L31">            return null;</span>
+        }
+<span class="fc" id="L33">        return autorRepository.findById(autorInformado.getId()).orElse(null);</span>
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;Livro&gt; criar(@Valid @RequestBody Livro livro) {
+<span class="fc" id="L38">        Autor autor = resolverAutor(livro.getAutor());</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (autor == null) {</span>
+<span class="fc" id="L40">            return ResponseEntity.badRequest().build(); // autor inexistente</span>
+        }
+<span class="fc" id="L42">        livro.setId(null);</span>
+<span class="fc" id="L43">        livro.setAutor(autor);</span>
+<span class="fc" id="L44">        return ResponseEntity.status(HttpStatus.CREATED).body(livroRepository.save(livro));</span>
+    }
+
+    @GetMapping
+    public List&lt;Livro&gt; listar() {
+<span class="fc" id="L49">        return livroRepository.findAllByOrderByTituloAsc();</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Livro&gt; buscar(@PathVariable Long id) {
+<span class="fc" id="L54">        return livroRepository.findById(id)</span>
+<span class="fc" id="L55">                .map(ResponseEntity::ok)</span>
+<span class="fc" id="L56">                .orElse(ResponseEntity.notFound().build());</span>
+    }
+
+    // (extra) livros de um autor
+    @GetMapping(&quot;/autor/{autorId}&quot;)
+    public List&lt;Livro&gt; listarPorAutor(@PathVariable Long autorId) {
+<span class="fc" id="L62">        return livroRepository.findByAutorId(autorId);</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Livro&gt; atualizar(@PathVariable Long id, @Valid @RequestBody Livro dados) {
+<span class="nc" id="L67">        Optional&lt;Livro&gt; existente = livroRepository.findById(id);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (existente.isEmpty()) {</span>
+<span class="nc" id="L69">            return ResponseEntity.notFound().build();</span>
+        }
+<span class="nc" id="L71">        Autor autor = resolverAutor(dados.getAutor());</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (autor == null) {</span>
+<span class="nc" id="L73">            return ResponseEntity.badRequest().build();</span>
+        }
+<span class="nc" id="L75">        Livro livro = existente.get();</span>
+<span class="nc" id="L76">        livro.setTitulo(dados.getTitulo());</span>
+<span class="nc" id="L77">        livro.setIsbn(dados.getIsbn());</span>
+<span class="nc" id="L78">        livro.setAnoPublicacao(dados.getAnoPublicacao());</span>
+<span class="nc" id="L79">        livro.setGenero(dados.getGenero());</span>
+<span class="nc" id="L80">        livro.setAutor(autor); // atualiza tambem o autor</span>
+<span class="nc" id="L81">        return ResponseEntity.ok(livroRepository.save(livro));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deletar(@PathVariable Long id) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (!livroRepository.existsById(id)) {</span>
+<span class="nc" id="L87">            return ResponseEntity.notFound().build();</span>
+        }
+<span class="nc" id="L89">        livroRepository.deleteById(id);</span>
+<span class="nc" id="L90">        return ResponseEntity.ok().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

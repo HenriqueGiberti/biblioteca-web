@@ -1,0 +1,6 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+biblioteca-web,com.biblioteca.model,Livro,0,4,0,0,0,2,0,1,0,1
+biblioteca-web,com.biblioteca.model,Autor,0,4,0,0,0,2,0,1,0,1
+biblioteca-web,com.biblioteca,BibliotecaApplication,5,3,0,0,2,1,1,1,1,1
+biblioteca-web,com.biblioteca.controller,LivroController,68,68,8,4,18,17,7,7,2,6
+biblioteca-web,com.biblioteca.controller,AutorController,6,90,2,4,2,23,2,7,0,6
